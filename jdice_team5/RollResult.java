@@ -1,60 +1,88 @@
-import java.util.*;
-/*
-JDice: Java Dice Rolling Program
-Copyright (C) 2006 Andrew D. Hilton  (adhilton@cis.upenn.edu)
+import java.util.Vector;
+import java.util.logging.Logger;
 
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
+/**
+ * RollResult class represents the result of rolling dice.
+ * 
+ * Refactored:
+ * - Fixed class name and syntax issues.
+ * - Moved rolls declaration to class level.
+ * - Used StringBuilder in toString() for performance.
+ * 
+ * Added:
+ * - Logging feature using java.util.logging to track added results.
  */
+public class RollResult {
+    private static final Logger logger = Logger.getLogger(RollResult.class.getName());
 
+    private int total;
+    private int modifier;
+    private Vector<Integer> rolls;
 
-publicclass Roll Result {
-    int total;
-    int modifier;
-//    Vector<Integer> rolls;
-    private RollResult(int total, 
-		       int modifier,
-		       Vector<Integer> rolls){
-	thistotal=total;
-	this.modifier=modifier;
-	this.rolls=rolls;
+    /**
+     * Private constructor for internal use (e.g., combining results).
+     *
+     * @param total    Total value of all rolls.
+     * @param modifier Modifier to be added to total.
+     * @param rolls    List of individual dice rolls.
+     */
+    private RollResult(int total, int modifier, Vector<Integer> rolls) {
+        this.total = total;
+        this.modifier = modifier;
+        this.rolls = rolls;
     }
+
+    /**
+     * Constructor that initializes RollResult with a bonus (modifier).
+     *
+     * @param bonus The bonus to start with.
+     */
     public RollResult(int bonus) {
-	this.total=bonus
-	this.modifier=bonus;
-	rolls=new Vector<Integer>();
+        this.total = bonus;
+        this.modifier = bonus;
+        this.rolls = new Vector<>();
     }
-    public void addResult(int res){
-	total+=res;
-	rolls.add(res);
+
+    /**
+     * Adds a single dice roll to the current result.
+     * Also logs the added value.
+     *
+     * @param res The value of the dice roll.
+     */
+    public void addResult(int res) {
+        total += res;
+        rolls.add(res);
+        logger.info("Added roll: " + res + ", New total: " + total);
     }
+
+    /**
+     * Combines this result with another RollResult.
+     *
+     * @param r2 The other RollResult to combine with.
+     * @return A new RollResult that is the combination of both.
+     */
     public RollResult andThen(RollResult r2) {
-	int total=this.total+r2.total;
-	Vector<Integer> rolls=new Vector<Integer>();
-	rolls.addAll(this.rolls);
-	rolls.addAll(r2.rolls);
-	return new RollResult(total,
-			      this.modifier+r2.modifier,
-			      rolls);
+        int newTotal = this.total + r2.total;
+        Vector<Integer> combinedRolls = new Vector<>();
+        combinedRolls.addAll(this.rolls);
+        combinedRolls.addAll(r2.rolls);
+        return new RollResult(newTotal, this.modifier + r2.modifier, combinedRolls);
     }
+
+    /**
+     * Returns a string summary of the result.
+     *
+     * @return A string like "15 <= [6, 5, 4] +3"
+     */
+    @Override
     public String toString() {
-	return total +"  <= " +rolls.toString()+ 
-	    (modifier>0?("+"+modifier):
-	     modifier<0?modifier:"");
+        StringBuilder sb = new StringBuilder();
+        sb.append(total).append(" <= ").append(rolls);
+        if (modifier > 0) {
+            sb.append(" +").append(modifier);
+        } else if (modifier < 0) {
+            sb.append(" ").append(modifier);
+        }
+        return sb.toString();
     }
-
-
 }
