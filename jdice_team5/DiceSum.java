@@ -28,7 +28,9 @@ public class DiceSum extends DieRoll {
      */
     public DiceSum(DieRoll r1, DieRoll r2) {
         super(0, 0, 0); // Gọi constructor cha với giá trị mặc định.
-       
+        if (r1 == null || r2 == null) {
+            throw new IllegalArgumentException("DiceSum constructor error: r1 and r2 must not be null.");
+        }
         this.r1 = r1;
         this.r2 = r2;
     }
@@ -38,6 +40,7 @@ public class DiceSum extends DieRoll {
      *
      * @return RollResult kết hợp giữa hai lần tung xúc xắc.
      */
+
     public RollResult makeRoll() {
         return r1.makeRoll().andThen(r2.makeRoll());
     }
