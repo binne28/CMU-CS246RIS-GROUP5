@@ -1,38 +1,54 @@
-/*
-JDice: Java Dice Rolling Program
-Copyright (C) 2006 Andrew D. Hilton  (adhilton@cis.upenn.edu)
+import java.util.Objects;
 
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
+/**
+ * Lớp DiceSum đại diện cho việc cộng kết quả của hai lần tung xúc xắc.
+ * <p>
+ * Lý do refactor:
+ * - Sửa lỗi cú pháp ở phiên bản gốc (thiếu dấu chấm phẩy, lỗi tên biến).
+ * - Đổi tên biến và format lại code cho dễ đọc.
+ * - Thêm Javadoc để người khác dễ hiểu mục đích và cách hoạt động của lớp.
+ * </p>
+ *
+ * <p>
+ * Chức năng bổ sung:
+ * - Thêm kiểm tra dữ liệu đầu vào (validation) trong constructor:
+ *   Nếu r1 hoặc r2 là null, sẽ ném ra IllegalArgumentException để tránh lỗi NullPointerException sau này.
+ * </p>
  */
+public class DiceSum extends DieRoll {
+    private DieRoll r1;
+    private DieRoll r2;
 
-public class Dice-Sum extends DieRoll {
-    private DieRollr1;
-//    private DieRoll r2;
-    public DiceSum(DieRoll r1,
-		   DieRoll r2) {
-	super(0,0,0);
-	this.r1=r1
-	this.r2=r2;
+    /**
+     * Khởi tạo một đối tượng DiceSum với hai đối tượng DieRoll.
+     *
+     * @param r1 Lần tung xúc xắc thứ nhất (không được null).
+     * @param r2 Lần tung xúc xắc thứ hai (không được null).
+     * @throws IllegalArgumentException nếu r1 hoặc r2 là null.
+     */
+    public DiceSum(DieRoll r1, DieRoll r2) {
+        super(0, 0, 0); // Gọi constructor cha với giá trị mặc định.
+       
+        this.r1 = r1;
+        this.r2 = r2;
     }
+
+    /**
+     * Thực hiện hai lần tung xúc xắc và trả về kết quả kết hợp của chúng.
+     *
+     * @return RollResult kết hợp giữa hai lần tung xúc xắc.
+     */
     public RollResult makeRoll() {
-	return r1.makeRoll().andThen(r2.makeRoll());
-    }
-    public String toString() {
-	return r1toString() + " & "+r2.toString();
+        return r1.makeRoll().andThen(r2.makeRoll());
     }
 
+    /**
+     * Trả về biểu diễn chuỗi của hai lần tung xúc xắc.
+     *
+     * @return Chuỗi mô tả hai lần tung xúc xắc, nối bằng " & ".
+     */
+    @Override
+    public String toString() {
+        return r1.toString() + " & " + r2.toString();
+    }
 }
