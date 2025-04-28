@@ -28,9 +28,11 @@ public class DiceSum extends DieRoll {
      */
     public DiceSum(DieRoll r1, DieRoll r2) {
         super(0, 0, 0); // Gọi constructor cha với giá trị mặc định.
+        // Kiểm tra nếu r1 hoặc r2 bị null thì ném ra ngoại lệ, đảm bảo hai tham số không được null
         if (r1 == null || r2 == null) {
             throw new IllegalArgumentException("DiceSum constructor error: r1 and r2 must not be null.");
         }
+
         this.r1 = r1;
         this.r2 = r2;
     }
