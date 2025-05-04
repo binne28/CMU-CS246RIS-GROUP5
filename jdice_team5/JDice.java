@@ -20,7 +20,7 @@ import java.io.*;
  * - Kết quả hiển thị trong JList, cho phép xóa toàn bộ bằng nút “Clear”.
  * - Hỗ trợ đọc danh sách biểu thức xúc xắc từ tệp đầu vào khi truyền tên file qua args.
  * </p>
-* Bổ sung chức năng cho showError
+* Hoàn thiện chức năng showError
 
 */
 public class JDice {
@@ -51,16 +51,13 @@ public class JDice {
 	    lastEvent=e.getWhen();
 		
 	    if(e.getSource() instanceof JComboBox || e.getActionCommand().equals(ROLL)) {
-			String s=inputBox.getSelectedItem().toString();
-			String[] arr=s.split("=");
-			String name="";
-			for(int i=0;i<arr.length-2;i++) { 
-		    	name=arr[i]+"=";
-			}
-			if(arr.length>=2){
-		    	name=name+arr[arr.length-2];
-				doRoll(name,arr[arr.length-1]);
-			}
+			//Xử lý khi nhấn Enter trên JComboBox hoặc nút Roll Selection
+			// Tách nhanh phần name và dice dựa trên dấu '=' cuối, ngắn gọn và tránh loop 
+			String s=inputBox.getSelectedItem().toString().trim();
+			int idx=s.lastIndexOf('=');
+			String name = idx > 0 ? s.substring(0, idx) : null;
+			String dice = idx > 0 ? s.substring(idx + 1) : null;
+			doRoll(name, dice);
 	    }
 	    else if(e.getActionCommand().equals(CLEAR)){ 
 			doClear();
