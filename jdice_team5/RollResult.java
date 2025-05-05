@@ -84,5 +84,6 @@ public class RollResult {
             sb.append(" ").append(modifier);
         }
         return sb.toString();
+        //heheheheheh
     }
 }
