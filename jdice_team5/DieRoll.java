@@ -11,6 +11,7 @@ import java.util.logging.Logger;
  * - Added input validation in constructor.
  * - Added logging to track roll operations.
  */
+//code sửa
 public class DieRoll {
     private final int ndice;
     private final int nsides;
