@@ -132,6 +132,7 @@ public class DiceParser {
             return parseRollInner(stream, rolls);
         }
         return rolls;
+//hehe
     }
 
     private static Vector<DieRoll> parseXDice(StringStream stream) {
