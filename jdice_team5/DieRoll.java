@@ -47,14 +47,13 @@ public class DieRoll {
 	}
 
 	public String toString() {
-	String ans =ndice+"d"+nsides;
-	if(bonus>0) {
-	    ans= ans+"+"+bonus;
+		String ans = ndice + "d" + nsides;
+		if (bonus > 0) {
+			ans = ans + "+" + bonus;
+		} else if (bonus < 0) {
+			ans = ans + bonus;
+		}
+		return ans;
 	}
-	else if(bonus<0) {
-	    ans=ans+bonus;
-	}
-	return ans;
-    }
 
 }
