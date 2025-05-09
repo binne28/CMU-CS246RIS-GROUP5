@@ -28,7 +28,8 @@ public class DiceSum extends DieRoll {
      */
     public DiceSum(DieRoll r1, DieRoll r2) {
         super(0, 0, 0); // Gọi constructor cha với giá trị mặc định.
-        /Check nếu r1 hoặc r2 bị null thì ném ra ngoại lệ, đảm bảo hai tham số không được null
+
+        // Kiểm tra nếu r1 hoặc r2 bị null thì ném ra ngoại lệ
         if (r1 == null || r2 == null) {
             throw new IllegalArgumentException("DiceSum constructor error: r1 and r2 must not be null.");
         }
@@ -42,9 +43,11 @@ public class DiceSum extends DieRoll {
      *
      * @return RollResult kết hợp giữa hai lần tung xúc xắc.
      */
-
     public RollResult makeRoll() {
-        return r1.makeRoll().andThen(r2.makeRoll());
+        RollResult first = r1.makeRoll();
+        RollResult second = r2.makeRoll();
+        System.out.println("Roll 1: " + first + ", Roll 2: " + second);
+        return first.andThen(second);
     }
 
     /**
@@ -57,3 +60,4 @@ public class DiceSum extends DieRoll {
         return r1.toString() + " & " + r2.toString();
     }
 }
+
