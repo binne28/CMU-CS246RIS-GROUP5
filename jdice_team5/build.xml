@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="JDice" default="compile" basedir=".">
+<project name="JDice" basedir="." default="compile">
 
-    <!-- Định nghĩa target compile -->
+    <!-- Cấu hình thư mục gốc và các thư mục cần thiết -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+
+    <!-- Compile task -->
     <target name="compile">
-        <mkdir dir="build/classes"/>
-        <javac srcdir="src" destdir="build/classes"/>
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
     </target>
 
-    <!-- Định nghĩa target test (nếu có) -->
-    <target name="test" depends="compile">
-        <junit>
-            <classpath>
-                <pathelement path="build/classes"/>
-                <fileset dir="lib">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-            <test name="com.example.MyTest"/>
-        </junit>
+    <!-- Clean task -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Run tests (nếu có) -->
+    <target name="test">
+        <java classname="YourTestClass" fork="true" classpath="${classes.dir}"/>
     </target>
 
 </project>
