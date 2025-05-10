@@ -2,14 +2,14 @@
 <project name="JDice" basedir="." default="compile">
 
     <!-- Cấu hình thư mục gốc và các thư mục cần thiết -->
-    <property name="src.dir" value="src"/>
+    <property name="src.dir" value="."/>
     <property name="build.dir" value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
 
     <!-- Compile task -->
     <target name="compile">
         <mkdir dir="${classes.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/>
     </target>
 
     <!-- Clean task -->
