@@ -1,59 +1,42 @@
-<<<<<<< HEAD
-name: Simple Java CI with Gradle (System Gradle)
-=======
-name: Java CI with Gradle
->>>>>>> b10157a2c4c6feeab95808282782c2b2a62e5c47
+name: Java CI with Ant
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-<<<<<<< HEAD
-      uses: actions/checkout@v3
+      # 1. Checkout mã nguồn từ repository
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Java 17
-      uses: actions/setup-java@v3
-=======
-      uses: actions/checkout@v4
+      # 2. Cài đặt JDK 17
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
->>>>>>> b10157a2c4c6feeab95808282782c2b2a62e5c47
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+      # 3. Cài đặt Ant
+      - name: Install Ant
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ant
+          ant -version  # Kiểm tra phiên bản Ant
 
-<<<<<<< HEAD
-    - name: Install Gradle
-      uses: gradle/wrapper-validation-action@v1
-      with:
-        gradle-version: '7.5'  # Chọn version Gradle mà bạn muốn dùng
+      # 4. Build với Ant (sử dụng build.xml bạn đã tạo)
+      - name: Build with Ant
+        run: |
+          cd jdice_team5
+          ant compile
 
-    - name: Build with Gradle
-      run: gradle build --no-daemon
-
-    - name: Run tests
-      run: gradle test --no-daemon
-=======
-    - name: Cache Gradle packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.gradle
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
-
-    - name: Build with Gradle
-      run: ./gradlew build --no-daemon
-
-    - name: Run tests (if any)
-      run: ./gradlew test --no-daemon
->>>>>>> b10157a2c4c6feeab95808282782c2b2a62e5c47
+      # 5. Chạy test nếu có (Bước này sẽ không chạy nếu chưa có cấu hình test)
+      - name: Run tests with Ant
+        run: |
+          cd jdice_team5
+          ant test
