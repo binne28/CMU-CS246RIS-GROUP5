@@ -1,0 +1,14 @@
+# Bỏ qua thư mục IDE
+.idea/
+*.iml
+
+# Bỏ qua thư mục biên dịch
+out/
+build/
+
+# Bỏ qua file tạm và hệ thống
+*.log
+*.swp
+*.bak
+.DS_Store
+Thumbs.db
