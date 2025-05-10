@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="JDice" default="compile" basedir=".">
+
+    <!-- Định nghĩa target compile -->
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes"/>
+    </target>
+
+    <!-- Định nghĩa target test (nếu có) -->
+    <target name="test" depends="compile">
+        <junit>
+            <classpath>
+                <pathelement path="build/classes"/>
+                <fileset dir="lib">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+            <test name="com.example.MyTest"/>
+        </junit>
+    </target>
+
+</project>
