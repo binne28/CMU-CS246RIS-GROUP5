@@ -1,4 +1,4 @@
-name: Simple Java CI (No Maven/Gradle)
+name: Simple Java CI with Gradle (System Gradle)
 
 on:
   push:
@@ -20,10 +20,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Compile Java files
-      run: |
-        mkdir -p out
-        javac -d out $(find src -name "*.java")
+    - name: Install Gradle
+      uses: gradle/wrapper-validation-action@v1
+      with:
+        gradle-version: '7.5'  # Chọn version Gradle mà bạn muốn dùng
 
-    - name: Run DiceParser
-      run: java -cp out jdice.DiceParser
+    - name: Build with Gradle
+      run: gradle build --no-daemon
+
+    - name: Run tests
+      run: gradle test --no-daemon
