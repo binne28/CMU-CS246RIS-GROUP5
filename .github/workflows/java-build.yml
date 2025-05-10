@@ -1,4 +1,4 @@
-name: Java CI without Build
+name: Java CI without Maven
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  check:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,6 +19,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Run static analysis (if applicable)
+      - name: Compile with javac
         run: |
-          java -jar path/to/static-analysis-tool.jar
+          javac -d out $(find . -name "*.java")
+
+      - name: Run tests (if applicable)
+        run: |
+          java -cp out YourMainClass
