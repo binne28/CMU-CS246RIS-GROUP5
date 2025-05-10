@@ -29,7 +29,7 @@ public class DiceSum extends DieRoll {
     public DiceSum(DieRoll r1, DieRoll r2) {
         super(0, 0, 0); // Gọi constructor cha với giá trị mặc định.
 
-        // Kiểm tra nếu r1 hoặc r2 bị null thì ném ra ngoại lệ
+        // Kiểm tra nếu r1 hoặc r2 bị null thì ném ra ngoại lệ, đảm bảo hai tham số không được null
         if (r1 == null || r2 == null) {
             throw new IllegalArgumentException("DiceSum constructor error: r1 and r2 must not be null.");
         }
@@ -44,9 +44,12 @@ public class DiceSum extends DieRoll {
      * @return RollResult kết hợp giữa hai lần tung xúc xắc.
      */
     public RollResult makeRoll() {
+        // Thực hiện tung xúc xắc lần thứ nhất và lần thứ hai
         RollResult first = r1.makeRoll();
         RollResult second = r2.makeRoll();
         System.out.println("Roll 1: " + first + ", Roll 2: " + second);
+
+        // Kết hợp kết quả của hai lần tung xúc xắc
         return first.andThen(second);
     }
 
@@ -57,7 +60,32 @@ public class DiceSum extends DieRoll {
      */
     @Override
     public String toString() {
+        // Trả về chuỗi kết hợp của hai lần tung xúc xắc
         return r1.toString() + " & " + r2.toString();
     }
+
+    // Các phương thức getter và setter cho các biến r1 và r2 (nếu cần)
+    public DieRoll getR1() {
+        return r1;
+    }
+
+    public void setR1(DieRoll r1) {
+        if (r1 == null) {
+            throw new IllegalArgumentException("r1 cannot be null");
+        }
+        this.r1 = r1;
+    }
+
+    public DieRoll getR2() {
+        return r2;
+    }
+
+    public void setR2(DieRoll r2) {
+        if (r2 == null) {
+            throw new IllegalArgumentException("r2 cannot be null");
+        }
+        this.r2 = r2;
+    }
 }
+
 
