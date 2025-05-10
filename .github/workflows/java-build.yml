@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: Simple Java CI with Gradle (System Gradle)
+=======
+name: Java CI with Gradle
+>>>>>>> b10157a2c4c6feeab95808282782c2b2a62e5c47
 
 on:
   push:
@@ -12,14 +16,22 @@ jobs:
 
     steps:
     - name: Checkout code
+<<<<<<< HEAD
       uses: actions/checkout@v3
 
     - name: Set up Java 17
       uses: actions/setup-java@v3
+=======
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+>>>>>>> b10157a2c4c6feeab95808282782c2b2a62e5c47
       with:
         java-version: '17'
         distribution: 'temurin'
 
+<<<<<<< HEAD
     - name: Install Gradle
       uses: gradle/wrapper-validation-action@v1
       with:
@@ -30,3 +42,18 @@ jobs:
 
     - name: Run tests
       run: gradle test --no-daemon
+=======
+    - name: Cache Gradle packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.gradle
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Build with Gradle
+      run: ./gradlew build --no-daemon
+
+    - name: Run tests (if any)
+      run: ./gradlew test --no-daemon
+>>>>>>> b10157a2c4c6feeab95808282782c2b2a62e5c47
