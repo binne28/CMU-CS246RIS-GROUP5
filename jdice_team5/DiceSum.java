@@ -56,6 +56,7 @@ public class DiceSum extends DieRoll {
      */
     @Override
     public String toString() {
+        System.out.println("conflic");
         return r1.toString() + " & " + r2.toString();
     }
 }
