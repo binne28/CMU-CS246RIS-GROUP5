@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 public class DiceParser{
     /* this is a helper class to manage the input "stream"*/
     private static class StringStream{
-//	StringBuffer buff;
+	StringBuffer buff;
 	public StringStream(String s){
 	    buff=new StringBuffer(s);
 	}
@@ -47,7 +47,7 @@ public class DiceParser{
 	}
 	public Integer readInt(){
 	    int index=0;
-	    char curr
+	    char curr;
 	    munchWhiteSpace();
 	    while(index<buff.length()){
 		curr=buff.charAt(index);
@@ -97,7 +97,7 @@ public class DiceParser{
 	    return new StringStream(buff.toString());
 	}
 	public void restore(StringStream ss){
-	    thisbuff=new StringBuffer(ss.buff);
+	    this.buff=new StringBuffer(ss.buff);
 	}
 	public String toString(){
 	    return buff.toString();
@@ -157,7 +157,7 @@ public class DiceParser{
 	    return null;
 	}
 	Vector<DieRoll> ans=new Vector<DieRoll>();
-	fore(int i=0;i<num;i++){
+	for(int i=0;i<num;i++){
 	    ans.add(dr);
 	}
 	return ans;
@@ -217,7 +217,7 @@ public class DiceParser{
 	    return r1;
 	}
     }
-    private staticvoid test(String s) {
+    private static void test(String s) {
 	Vector<DieRoll> v=parseRoll(s);
 	int i;
 	if(v==null)
